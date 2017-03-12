@@ -17,7 +17,6 @@ public class JsonbHibernateExampleApplicationTests {
 
 	@Test
 	public void contextLoads() {
-
 		Person person = new Person();
 		person.setFirstName("John");
 		person.setLastName("Doe");
