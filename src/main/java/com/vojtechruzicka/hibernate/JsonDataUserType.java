@@ -76,7 +76,7 @@ public class JsonDataUserType implements UserType {
 
     @Override
     public Object replace(Object original, Object target, Object owner) throws HibernateException {
-        return original;
+        return deepCopy(original);
     }
 
     @Override
