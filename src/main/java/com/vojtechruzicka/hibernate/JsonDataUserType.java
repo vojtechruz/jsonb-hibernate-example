@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.hibernate.HibernateException;
 import org.hibernate.engine.spi.SessionImplementor;
+import org.hibernate.type.SerializationException;
 import org.hibernate.usertype.UserType;
 import org.postgresql.util.PGobject;
 import org.springframework.util.ObjectUtils;
@@ -59,12 +60,18 @@ public class JsonDataUserType implements UserType {
 
     @Override
     public Serializable disassemble(Object value) throws HibernateException {
-        return gson.toJson(value, Map.class);
+        Object copy = deepCopy(value);
+
+        if (copy instanceof Serializable) {
+            return (Serializable) copy;
+        }
+
+        throw new SerializationException(String.format("Cannot serialize '%s', %s is not Serializable.", value, value.getClass()), null);
     }
 
     @Override
     public Object assemble(Serializable cached, Object owner) throws HibernateException {
-        return gson.fromJson((String) cached, Map.class);
+        return deepCopy(cached);
     }
 
     @Override
