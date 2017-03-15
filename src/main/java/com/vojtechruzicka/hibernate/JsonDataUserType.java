@@ -85,8 +85,7 @@ public class JsonDataUserType implements UserType {
     }
 
     @Override
-    public int hashCode(Object x) throws HibernateException
-    {
+    public int hashCode(Object x) throws HibernateException {
         if (x == null) {
             return 0;
         }
