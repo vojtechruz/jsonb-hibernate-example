@@ -51,7 +51,7 @@ public class JsonDataUserType implements UserType {
     @Override
     public Object nullSafeGet(ResultSet rs, String[] names, SessionImplementor session, Object owner) throws HibernateException, SQLException {
         PGobject o = (PGobject) rs.getObject(names[0]);
-        if (o.getValue() != null) {
+        if (o != null && o.getValue() != null) {
             return gson.fromJson(o.getValue(), Map.class);
         }
 
